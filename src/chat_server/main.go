@@ -16,29 +16,29 @@ import (
 func getHostIP() (string, error) {
     // TODO: different IPS for region-based cloud servers
 
-    host := os.Getenv("HOST_IP")
-    if host == "" {
-        return "", errors.New("Missing/empty host ip")
+    host, ok := os.LookupEnv("HOST_IP")
+    if !ok {
+        return "", errors.New("Missing host ip")
     }
     return host, nil
 }
 
 // Return the deployed service's TCP_PORT
 func getTCPPort() (string, error) {
-    host := os.Getenv("TCP_PORT")
-    if host == "" {
+    tcpPort, ok := os.LookupEnv("TCP_PORT")
+    if !ok || tcpPort == "" {
         return "", errors.New("Missing/empty TCP port")
     }
-    return host, nil
+    return tcpPort, nil
 }
 
 // Return the deployed service's API_IP
 func getAPIPort() (string, error) {
-    host := os.Getenv("API_PORT")
-    if host == "" {
+    apiPort, ok := os.LookupEnv("API_PORT")
+    if !ok || apiPort == "" {
         return "", errors.New("Missing/empty API port")
     }
-    return host, nil
+    return apiPort, nil
 }
 
 func ServerIDFromIP(ipAddr string) (serverID string, err error) {
